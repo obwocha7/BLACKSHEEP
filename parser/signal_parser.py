@@ -95,8 +95,16 @@ def parse_message(chat_id: str, message_id: int, text: str) -> Signal:
     if re.search(r"close.*completely|close gold completely", raw, re.IGNORECASE):
         return Signal(message_id, chat_id, raw, ActionType.CLOSE_ALL)
 
+    # Handle mixed instruction blocks where close + now may appear together.
+    # Prioritize explicit CLOSE_ALL semantics before handling buy/sell-now.
+    if re.search(r"\bclose\s+gold\b", raw, re.IGNORECASE):
+        return Signal(message_id, chat_id, raw, ActionType.CLOSE_ALL)
+
     if re.search(r"take some profits|secure some profits|book some profits|consider booking", raw, re.IGNORECASE):
         return Signal(message_id, chat_id, raw, ActionType.SOFT_PARTIAL)
+
+    if re.search(r"stop\s*loss\s*hit", raw, re.IGNORECASE):
+        return Signal(message_id, chat_id, raw, ActionType.CLOSE_ALL)
 
     if re.search(r"re-entry", raw, re.IGNORECASE):
         return Signal(
@@ -113,7 +121,9 @@ def parse_message(chat_id: str, message_id: int, text: str) -> Signal:
         )
 
     now_price = _extract_float(r"(?:buy|sell)\s*now(?:\s*at)?\s*([0-9]+(?:\.[0-9]+)?)", raw)
-    if now_price is not None and side is not None:
+    if side is not None and re.search(r"(?:buy|sell)\s*now", raw, re.IGNORECASE):
+        if now_price is None:
+            now_price = low if low is not None else high
         return Signal(
             source_message_id=message_id,
             chat_id=chat_id,

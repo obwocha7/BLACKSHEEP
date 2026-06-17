@@ -1,0 +1,5 @@
+2026-06-17 16:21:17,463 | ERROR | execution.mt5_client | MT5 initialize failed: (-10005, 'IPC timeout')
+2026-06-17 16:26:02,600 | ERROR | execution.mt5_client | MT5 initialize failed: (-10005, 'IPC timeout')
+2026-06-17 16:28:01,061 | ERROR | execution.mt5_client | MT5 initialize failed: (-10005, 'IPC timeout')
+2026-06-17 16:33:18,748 | ERROR | execution.mt5_client | MT5 initialize failed: (-10005, 'IPC timeout')
+2026-06-17 16:39:59,166 | ERROR | execution.mt5_client | MT5 initialize failed: (-10005, 'IPC timeout')

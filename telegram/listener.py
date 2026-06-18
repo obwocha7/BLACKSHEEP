@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 from telethon import TelegramClient, events
 
 from config import Settings
@@ -15,13 +16,40 @@ class TelegramSignalListener:
     def __init__(self, settings: Settings, manager: TradeManager):
         self.settings = settings
         self.manager = manager
-        self.client = TelegramClient(settings.tg_session_name, settings.tg_api_id, settings.tg_api_hash)
+
+        session_value = (settings.tg_session_file or "").strip() or settings.tg_session_name
+        self.session_value = session_value
+        self.client = TelegramClient(session_value, settings.tg_api_id, settings.tg_api_hash)
+
+        session_db = f"{session_value}.session" if not str(session_value).endswith(".session") else str(session_value)
+        self.session_db_path = Path(session_db).resolve()
 
     def _allowed(self, event) -> bool:
         allowed = str(self.settings.tg_allowed_chat).strip().lower()
         chat = str(getattr(event.chat, "username", "") or "").strip().lower()
         chat_id = str(getattr(event, "chat_id", ""))
         return (allowed == chat) or (allowed == chat_id)
+
+    async def authorize(self) -> None:
+        logger.info("Telegram session target=%s", self.session_db_path)
+        await self.client.connect()
+        if await self.client.is_user_authorized():
+            logger.info("Telegram session already authorized.")
+            return
+
+        logger.info("Telegram session not authorized. Starting interactive sign-in.")
+        phone = input("Please enter your phone (or bot token): ").strip()
+        await self.client.send_code_request(phone)
+        code = input("Please enter the code you received: ").strip()
+        try:
+            await self.client.sign_in(phone=phone, code=code)
+        except Exception as exc:
+            if "password" in str(exc).lower():
+                pwd = input("Please enter your Telegram 2FA password: ").strip()
+                await self.client.sign_in(password=pwd)
+            else:
+                raise
+        logger.info("Telegram authorization completed.")
 
     async def start(self) -> None:
         @self.client.on(events.NewMessage)
@@ -42,6 +70,5 @@ class TelegramSignalListener:
             except Exception as exc:
                 logger.exception("Listener handler error: %s", exc)
 
-        await self.client.start()
         logger.info("Telegram listener started.")
         await self.client.run_until_disconnected()

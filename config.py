@@ -10,6 +10,7 @@ class Settings(BaseModel):
     tg_api_id: int = Field(default_factory=lambda: int(os.getenv("TG_API_ID", "0")))
     tg_api_hash: str = Field(default_factory=lambda: os.getenv("TG_API_HASH", ""))
     tg_session_name: str = Field(default_factory=lambda: os.getenv("TG_SESSION_NAME", "tg_mt5_session"))
+    tg_session_file: str = Field(default_factory=lambda: os.getenv("TG_SESSION_FILE", "").strip())
     tg_allowed_chat: str = Field(default_factory=lambda: os.getenv("TG_ALLOWED_CHAT", ""))
 
     mt5_login: int = Field(default_factory=lambda: int(os.getenv("MT5_LOGIN", "0")))

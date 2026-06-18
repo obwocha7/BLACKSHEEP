@@ -1,6 +1,7 @@
-## RDP thorough runtime + transition hardening
-- [x] Backup old state.db and recreate schema-compatible DB
-- [x] Launch app and verify API endpoints via curl
-- [x] Validate reconciler/DRY_RUN runtime stability
-- [ ] Add full transition documentation for future machine migration
-- [ ] Commit all updates on blackboxai/setup-and-thorough-testing
+# TODO
+
+- [ ] Add explicit `TG_SESSION_FILE` support in config and propagate to Telegram client initialization.
+- [ ] Harden Telegram authorize flow with clear session-path/authorization logging and optional 2FA handling.
+- [ ] Update `run_bot.bat` to set `TG_SESSION_FILE`, validate session directory/file access, and improve diagnostics.
+- [ ] Add `auth_bootstrap.py` utility for one-time interactive session generation/refresh.
+- [ ] Run full validation: scheduler run, log inspection, and API checks (`/health`, `/state/summary`), then mark complete.

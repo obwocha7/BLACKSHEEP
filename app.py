@@ -64,8 +64,19 @@ def diagnose(mt5c: MT5Client) -> int:
     return 0
 
 
-async def run_listener(manager: TradeManager) -> None:
-    listener = TelegramSignalListener(settings, manager)
+async def run_system(listener: TelegramSignalListener, store: StateStore, mt5c: MT5Client, reconciler: Reconciler) -> None:
+    await listener.authorize()
+
+    t_dash = threading.Thread(target=run_dashboard, args=(store, mt5c), daemon=True)
+    t_dash.start()
+
+    t_rec = threading.Thread(
+        target=run_reconciler_loop,
+        args=(reconciler, settings.reconcile_interval_seconds),
+        daemon=True,
+    )
+    t_rec.start()
+
     await listener.start()
 
 
@@ -104,18 +115,9 @@ def main() -> None:
     manager = TradeManager(settings, store, mt5c)
     reconciler = Reconciler(store, mt5c)
 
-    t_dash = threading.Thread(target=run_dashboard, args=(store, mt5c), daemon=True)
-    t_dash.start()
-
-    t_rec = threading.Thread(
-        target=run_reconciler_loop,
-        args=(reconciler, settings.reconcile_interval_seconds),
-        daemon=True,
-    )
-    t_rec.start()
-
+    listener = TelegramSignalListener(settings, manager)
     try:
-        asyncio.run(run_listener(manager))
+        asyncio.run(run_system(listener, store, mt5c, reconciler))
     finally:
         mt5c.shutdown()
 

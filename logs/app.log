@@ -3,3 +3,1075 @@
 2026-06-17 16:28:01,061 | ERROR | execution.mt5_client | MT5 initialize failed: (-10005, 'IPC timeout')
 2026-06-17 16:33:18,748 | ERROR | execution.mt5_client | MT5 initialize failed: (-10005, 'IPC timeout')
 2026-06-17 16:39:59,166 | ERROR | execution.mt5_client | MT5 initialize failed: (-10005, 'IPC timeout')
+2026-06-17 15:30:38,603 | INFO | execution.mt5_client | MT5 connected account=57467679 server=HFMarketsKE-Demo2
+2026-06-17 15:30:38,618 | INFO | execution.mt5_client | Selected MT5 symbol: XAUUSD
+2026-06-17 15:30:38,639 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:30:38,695 | INFO | telethon.network.mtprotosender | Connecting to 149.154.167.51:443/TcpFull...
+2026-06-17 15:30:40,279 | INFO | telethon.network.mtprotosender | Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-17 15:30:58,683 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:31:18,694 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:31:38,704 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:31:58,714 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:32:18,723 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:32:38,737 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:32:58,754 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:33:18,765 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:33:38,773 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:33:58,784 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:34:18,794 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:34:38,803 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:34:58,814 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:35:18,822 | ERROR | __main__ | Reconciler error: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: signal_states.signal_group_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\app.py", line 32, in run_reconciler_loop
+    reconciler.reconcile()
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\execution\reconciler.py", line 33, in reconcile
+    latest = self.store.get_latest_open_signal(symbol=self.mt5.symbol.name if self.mt5.symbol else "XAUUSD")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\storage\state_store.py", line 181, in get_latest_open_signal
+    .first()
+     ^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Administrator\Desktop\BLACKSHEEP\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: signal_states.signal_group_id
+[SQL: SELECT signal_states.id AS signal_states_id, signal_states.chat_id AS signal_states_chat_id, signal_states.source_message_id AS signal_states_source_message_id, signal_states.symbol AS signal_states_symbol, signal_states.side AS signal_states_side, signal_states.lifecycle AS signal_states_lifecycle, signal_states.signal_group_id AS signal_states_signal_group_id, signal_states.entry_role AS signal_states_entry_role, signal_states.closed_reason AS signal_states_closed_reason, signal_states.continuation_add_count AS signal_states_continuation_add_count, signal_states.sl AS signal_states_sl, signal_states.tp1 AS signal_states_tp1, signal_states.tp2 AS signal_states_tp2, signal_states.created_at AS signal_states_created_at, signal_states.updated_at AS signal_states_updated_at 
+FROM signal_states 
+WHERE signal_states.symbol = ? AND signal_states.lifecycle IN (?, ?, ?) ORDER BY signal_states.id DESC
+ LIMIT ? OFFSET ?]
+[parameters: ('XAUUSD', 'OPEN', 'PARTIAL_CLOSED', 'PENDING', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-17 15:35:47,153 | INFO | execution.mt5_client | MT5 connected account=57467679 server=HFMarketsKE-Demo2
+2026-06-17 15:35:47,160 | INFO | execution.mt5_client | Selected MT5 symbol: XAUUSD
+2026-06-17 15:35:47,174 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:35:47,177 | INFO | telethon.network.mtprotosender | Connecting to 149.154.167.51:443/TcpFull...
+2026-06-17 15:35:47,289 | INFO | telethon.network.mtprotosender | Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-17 15:36:07,178 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:36:27,181 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:36:47,185 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:37:07,189 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:37:27,192 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:37:47,194 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:38:07,196 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:38:27,199 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:38:47,202 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:39:07,205 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:39:27,210 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:39:47,212 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:40:07,215 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:40:27,219 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:40:47,222 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:41:07,225 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:41:27,228 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:41:47,231 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:42:07,233 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:42:27,236 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:42:47,238 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:43:07,241 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:43:27,244 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:43:47,246 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:44:07,249 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:44:27,252 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:44:47,255 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:45:07,259 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:45:27,262 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:45:47,265 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:46:07,267 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:46:27,270 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:46:47,272 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:47:07,275 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:47:27,278 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:47:47,291 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:48:07,368 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:48:27,372 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:48:47,375 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:49:07,378 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:49:27,381 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:49:47,399 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:50:07,433 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:50:27,436 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:50:47,439 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:51:07,442 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:51:27,445 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:51:47,448 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:52:07,453 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:52:27,458 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:52:47,462 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:53:07,465 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:53:27,468 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:53:47,472 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:54:07,474 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:54:27,478 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:54:47,480 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}
+2026-06-17 15:55:07,483 | INFO | execution.reconciler | reconcile_report={'open_positions': 0, 'open_orders': 0, 'db_open_tickets_checked': 0, 'db_marked_closed': 0, 'orphan_imported': 0}

@@ -71,3 +71,25 @@ def test_parse_now():
 def test_parse_noise():
     s = parse_message("chat1", 10, "✨ 38,000+ students already started earning with me ✨")
     assert s.action_type == ActionType.NOISE
+
+
+def test_parse_close_gold_buy_then_sell_now_block_prefers_close_all():
+    s = parse_message(
+        "chat1",
+        11,
+        "Close GOLD BUY 4324\nGOLD SELL NOW\nScalp Setup\n4322-4325 If the market is unable to break this range",
+    )
+    assert s.action_type == ActionType.CLOSE_ALL
+
+
+def test_parse_stop_loss_hit_maps_to_close_all():
+    s = parse_message("chat1", 12, "Stop loss hit ! ❌\n-45 pips!")
+    assert s.action_type == ActionType.CLOSE_ALL
+
+
+def test_parse_sell_now_without_explicit_now_price_uses_range():
+    s = parse_message("chat1", 13, "GOLD SELL NOW\n4322-4325")
+    assert s.action_type == ActionType.SELL_NOW
+    assert s.side == Side.SELL
+    assert s.entry_low == 4322
+    assert s.entry_high == 4322

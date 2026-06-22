@@ -38,9 +38,25 @@ class TelegramSignalListener:
             return
 
         logger.info("Telegram session not authorized. Starting interactive sign-in.")
-        phone = input("Please enter your phone (or bot token): ").strip()
-        await self.client.send_code_request(phone)
-        code = input("Please enter the code you received: ").strip()
+        phone = input("Please enter your phone (international format, e.g. +2547...): ").strip()
+        sent = await self.client.send_code_request(phone)
+        logger.info(
+            "Telegram code requested via app channel. type=%s timeout=%s",
+            type(getattr(sent, "type", None)).__name__,
+            getattr(sent, "timeout", None),
+        )
+        code = input("Enter Telegram code (or press Enter if not received): ").strip()
+
+        if not code:
+            logger.warning("No code entered. Retrying code request with force_sms=True.")
+            sent_sms = await self.client.send_code_request(phone, force_sms=True)
+            logger.info(
+                "Telegram SMS code requested. type=%s timeout=%s",
+                type(getattr(sent_sms, "type", None)).__name__,
+                getattr(sent_sms, "timeout", None),
+            )
+            code = input("Enter Telegram SMS code: ").strip()
+
         try:
             await self.client.sign_in(phone=phone, code=code)
         except Exception as exc:
@@ -49,7 +65,10 @@ class TelegramSignalListener:
                 await self.client.sign_in(password=pwd)
             else:
                 raise
-        logger.info("Telegram authorization completed.")
+
+        if not await self.client.is_user_authorized():
+            raise RuntimeError("Telegram authorization failed: session remains unauthorized after sign-in flow.")
+        logger.info("Telegram authorization completed and persisted.")
 
     async def start(self) -> None:
         @self.client.on(events.NewMessage)

@@ -10,6 +10,7 @@ set "ENVLOG=logs\runner.env.log"
 
 set "TG_SESSION_FILE=C:\Users\Administrator\Desktop\BLACKSHEEP\tg_mt5_session"
 set "TG_SESSION_DB=%TG_SESSION_FILE%.session"
+set "TG_SESSION_BAK=%TG_SESSION_DB%.missingtest"
 
 echo ==== START %date% %time% ====>>"%LOG%"
 echo ==== START %date% %time% ====>>"%ERR%"
@@ -25,6 +26,24 @@ if exist "%TG_SESSION_DB%" (
   echo SESSION_FILE_EXISTS=1>>"%ENVLOG%"
 ) else (
   echo SESSION_FILE_EXISTS=0>>"%ENVLOG%"
+)
+
+if not exist "%TG_SESSION_DB%" (
+  if exist "%TG_SESSION_BAK%" (
+    echo SESSION_RESTORE_ACTION=RESTORE_FROM_BACKUP>>"%ENVLOG%"
+    copy /y "%TG_SESSION_BAK%" "%TG_SESSION_DB%" >>"%LOG%" 2>>"%ERR%"
+    if errorlevel 1 (
+      echo SESSION_RESTORE_RESULT=FAILED>>"%ENVLOG%"
+      echo ABORT: Failed to restore Telegram session from backup %TG_SESSION_BAK%.>>"%ERR%"
+      exit /b 31
+    ) else (
+      echo SESSION_RESTORE_RESULT=SUCCESS>>"%ENVLOG%"
+    )
+  ) else (
+    echo SESSION_RESTORE_ACTION=NO_PRIMARY_NO_BACKUP>>"%ENVLOG%"
+    echo ABORT: Telegram session missing. Neither %TG_SESSION_DB% nor backup %TG_SESSION_BAK% exists.>>"%ERR%"
+    exit /b 30
+  )
 )
 
 where python >>"%ENVLOG%" 2>&1

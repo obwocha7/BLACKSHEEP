@@ -44,10 +44,15 @@ Changes:
   - `session_value = tg_session_file or tg_session_name`
 - Logs effective resolved session file target at auth time.
 - Keeps explicit `authorize()` flow before listener starts.
+- Added explicit code request + fallback logic:
+  - `send_code_request(phone)` for in-app code,
+  - if no code entered, retries with `send_code_request(phone, force_sms=True)`.
 - Added 2FA fallback branch during sign-in (if Telegram password is required).
+- Verifies authorization persistence after sign-in and raises on failure.
 
 Operational effect:
 - Improved visibility of exact session file in use.
+- Better resilience when in-app OTP is delayed/unavailable.
 - Better resilience for accounts with Telegram 2FA enabled.
 
 ---
@@ -110,6 +115,22 @@ This prevents:
 ---
 
 ## Verification Evidence
+
+### 2026-06-22 latest validation snapshot
+
+- Interactive bootstrap completed successfully with correct phone/code.
+- Explicit auth probe returned `AUTHORIZED=True`.
+- Scheduler run showed:
+  - `Telegram session already authorized.`
+  - `Telegram listener started.`
+- API checks passed on active scheduler run:
+  - `GET /health` -> 200
+  - `GET /state/summary` -> 200
+- Soak/PID stability metrics:
+  - `SOAK_OK=6`
+  - `SOAK_FAIL=0`
+  - `LISTENER_PID_UNIQUE_COUNT=1`
+  - `LISTENER_PIDS=4360`
 
 ## A) API and endpoint checks
 

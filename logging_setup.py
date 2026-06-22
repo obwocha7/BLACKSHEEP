@@ -1,5 +1,4 @@
 import logging
-from logging.handlers import RotatingFileHandler
 import os
 
 
@@ -18,6 +17,6 @@ def setup_logging(level: str = "INFO") -> None:
     console.setFormatter(fmt)
     root.addHandler(console)
 
-    file_handler = RotatingFileHandler("logs/app.log", maxBytes=2_000_000, backupCount=3)
+    file_handler = logging.FileHandler("logs/app.log", mode="a", encoding="utf-8")
     file_handler.setFormatter(fmt)
     root.addHandler(file_handler)
